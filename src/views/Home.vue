@@ -111,13 +111,12 @@ export default {
     let inputValue = ref('')
     let showList = computed(() => !!inputValue.value)
 
-    let search = async () => {
+    let search = () => {
       let queryword = inputValue.value
-      if(!queryword.replace(/\s*/g,"")) return
-      window.result = await fetchHandler('api/search/complex', {
-        queryword,
-      })
-      console.log(window.result);
+      // if(!queryword.replace(/\s*/g,"")) return
+      // window.result = await fetchHandler('api/search/complex', {
+      //   queryword,
+      // })
       router.push({
         path: '/result',
         query: {
@@ -136,7 +135,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#realbox-matches a {
-  text-align: left;
+#realbox-matches  {
+  padding-bottom: 0;
+  a {
+    text-align: left;
+  }
 }
 </style>
