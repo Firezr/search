@@ -56,19 +56,21 @@
             style="-webkit-mask-image: url('search.svg')"
           ></div> -->
           <input
+            v-model="inputValue"
+            @keyup.enter='search'
             id="realbox"
             type="search"
             autocomplete="off"
             spellcheck="false"
             aria-live="polite"
             autofocus=""
-            placeholder="在 Google 上搜索，或者输入一个网址"
-          />
-          <!-- <button
+            placeholder="在 Google 上搜索，或者输入一个网址" />
+          <button
             id="realbox-microphone"
             class="microphone-icon"
             title="语音搜索"
-          ></button> -->
+            @click="search">
+          </button>
           <div role="listbox" id="realbox-matches">
             <a
               href=""
@@ -76,89 +78,60 @@
               aria-label="dsrtg trtry hjjhjhgjghjggh - Google 搜索"
               class="selected"
               aria-selected="true"
+              v-if="false"
               >
               <!-- <div class="match-icon" style="-webkit-mask-image: url('search.svg')"></div> -->
               <span>dsrtg trtry hjjhjhgjghjggh</span> -
               <span class="description"><span class="dim">Google 搜索</span></span>
             </a>
-            <a
+            <!-- <a
               href=""
               role="option"
               aria-label="dsrtg trtry hjjhjhgjghjggh - Google 搜索"
               >
-              <!-- <div class="match-icon" style="-webkit-mask-image: url('search.svg')"></div> -->
               <span>dsrtg trtry hjjhjhgjghjggh</span> -
               <span class="description"><span class="dim">Google 搜索</span></span>
-            </a>
-            <a
-              href=""
-              role="option"
-              aria-label="dsrtg trtry hjjhjhgjghjggh - Google 搜索"
-              >
-              <!-- <div class="match-icon" style="-webkit-mask-image: url('search.svg')"></div> -->
-              <span>dsrtg trtry hjjhjhgjghjggh</span> -
-              <span class="description"><span class="dim">Google 搜索</span></span>
-            </a>
+            </a> -->
           </div>
+
         </div>
       </div>
 
-      <!-- Notification shown when the tiles are modified. -->
-      <div id="mv-notice-container">
-        <div id="mv-notice" class="notice-hide" role="alert">
-          <span id="mv-msg">已移除快捷方式</span>
-          <!-- Links in the notification. -->
-          <span id="mv-notice-links">
-            <span id="mv-undo" class="ripple" tabindex="0" role="button"
-              >撤消</span
-            >
-            <span
-              id="mv-restore"
-              class="ripple"
-              tabindex="0"
-              role="button"
-            ></span>
-          </span>
-        </div>
-      </div>
-
-      <div id="attribution" style="display: none">
-        <div id="attribution-text">主题背景创建者：</div>
-      </div>
-
-      <div id="error-notice-container">
-        <div id="error-notice" class="notice-hide" role="alert">
-          <span id="error-notice-icon"></span>
-          <span id="error-notice-msg"></span>
-          <span
-            id="error-notice-link"
-            class="ripple"
-            tabindex="0"
-            role="button"
-          ></span>
-        </div>
-      </div>
-
-      <div
-        id="edit-bg"
-        tabindex="0"
-        role="button"
-        class="ep-enhanced"
-        aria-label="自定义此页"
-        title="自定义此页"
-      >
-        <div id="edit-bg-icon"></div>
-        <span id="edit-bg-text">自定义</span>
-      </div>
-
-      <div id="custom-bg-attr"></div>
     </div>
   </div>
 </template>
 
 <script>
+import { computed, ref } from 'vue';
+import router from "../router";
+import { fetchHandler } from "../service/index.js";
 export default {
   components: {},
+  setup() {
+    let inputValue = ref('')
+    let showList = computed(() => !!inputValue.value)
+
+    let search = async () => {
+      let queryword = inputValue.value
+      if(!queryword.replace(/\s*/g,"")) return
+      window.result = await fetchHandler('api/search/complex', {
+        queryword,
+      })
+      console.log(window.result);
+      router.push({
+        path: '/result',
+        query: {
+          queryword
+        }
+      })
+    }
+    return {
+      inputValue,
+      showList,
+
+      search
+    }
+  }
 };
 </script>
 
