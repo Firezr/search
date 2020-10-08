@@ -120,7 +120,7 @@ export default {
       router.push({
         path: '/result',
         query: {
-          queryword
+          q: queryword
         }
       })
     }

@@ -23,7 +23,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-    let { queryword } = route.query;
+    let { q: queryword } = route.query;
     let inputValue = ref(queryword);
 
     let searchResult = ref({});
@@ -32,7 +32,7 @@ export default {
       let queryword = inputValue.value;
       if (!queryword.replace(/\s*/g, "")) return;
       searchResult.value = await fetchHandler("api/search/complex", {
-        queryword,
+        q: queryword,
       });
       console.log(searchResult.value);
     };
