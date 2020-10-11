@@ -24,7 +24,7 @@
       </div>
 
       <div>
-        <img alt="Vue logo" src="../assets/logo.png" />
+        <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
       </div>
 
       <div id="fakebox-container" hidden="">
@@ -55,21 +55,31 @@
             data-icon="search.svg"
             style="-webkit-mask-image: url('search.svg')"
           ></div> -->
+          <div id="realbox-icon">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-search-1"></use>
+            </svg>
+          </div>
           <input
             v-model="inputValue"
-            @keyup.enter='search'
+            @keyup.enter="search"
             id="realbox"
             type="search"
             autocomplete="off"
             spellcheck="false"
             aria-live="polite"
             autofocus=""
-            placeholder="在 Google 上搜索，或者输入一个网址" />
+            placeholder="在 Google 上搜索，或者输入一个网址"
+          />
           <button
             id="realbox-microphone"
             class="microphone-icon"
-            title="语音搜索"
-            @click="search">
+            title="搜索"
+            @click="search"
+          >
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-arrow"></use>
+            </svg>
           </button>
           <div role="listbox" id="realbox-matches">
             <a
@@ -79,10 +89,12 @@
               class="selected"
               aria-selected="true"
               v-if="false"
-              >
+            >
               <!-- <div class="match-icon" style="-webkit-mask-image: url('search.svg')"></div> -->
               <span>dsrtg trtry hjjhjhgjghjggh</span> -
-              <span class="description"><span class="dim">Google 搜索</span></span>
+              <span class="description"
+                ><span class="dim">Google 搜索</span></span
+              >
             </a>
             <!-- <a
               href=""
@@ -93,52 +105,66 @@
               <span class="description"><span class="dim">Google 搜索</span></span>
             </a> -->
           </div>
-
         </div>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { computed, ref } from "vue";
 import router from "../router";
 import { fetchHandler } from "../service/index.js";
 export default {
   components: {},
   setup() {
-    let inputValue = ref('')
-    let showList = computed(() => !!inputValue.value)
+    let inputValue = ref("");
+    let showList = computed(() => !!inputValue.value);
 
     let search = () => {
-      let queryword = inputValue.value
+      let queryword = inputValue.value;
       // if(!queryword.replace(/\s*/g,"")) return
       // window.result = await fetchHandler('api/search/complex', {
       //   queryword,
       // })
       router.push({
-        path: '/result',
+        path: "/result",
         query: {
-          q: queryword
-        }
-      })
-    }
+          q: queryword,
+        },
+      });
+    };
     return {
       inputValue,
       showList,
 
-      search
-    }
-  }
+      search,
+    };
+  },
 };
 </script>
 
-<style lang="scss" scoped>
-#realbox-matches  {
+<style lang="scss">
+#realbox-matches {
   padding-bottom: 0;
   a {
     text-align: left;
+  }
+}
+#realbox-container {
+  #realbox-icon {
+    background: white;
+    top: 50%;
+    transform: translate(0, -35%);
+  }
+  #realbox-microphone {
+    background: url("") no-repeat center;
+    outline:none;
+    .icon {
+      top: 50%;
+      transform: translate(0px, -50%);
+      font-size: 20px;
+    }
   }
 }
 </style>
