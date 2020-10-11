@@ -33,9 +33,6 @@
       <div id="realbox-container" class="realbox-container">
         <div id="realbox-input-wrapper" class="show-matches">
           <div id="realbox-icon">
-            <!-- <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-search-1"></use>
-            </svg> -->
           </div>
           <input
             v-model="inputValue"
