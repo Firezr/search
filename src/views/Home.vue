@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div id="custom-bg" style="opacity: 0"></div>
+    <div id="custom-bg" :style="{ background : 'url(https://picsum.photos/1920/1080?random) no-repeat no-repeat', backgroundSize: 'cover', opacity: 0.6 }"></div>
     <div id="custom-bg-preview"></div>
     <!-- Container for the OneGoogleBar HTML. -->
     <div id="one-google" class="show-element"></div>
@@ -155,7 +155,7 @@ export default {
   #realbox-icon {
     background: white;
     top: 50%;
-    transform: translate(0, -35%);
+    transform: translate(0, -43%);
   }
   #realbox-microphone {
     background: url("") no-repeat center;
